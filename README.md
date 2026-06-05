@@ -1,30 +1,86 @@
 # Overleaf LatexDiff
 
-一个最小可用的 Chrome Manifest V3 插件。打开 Overleaf 项目页后，点击插件图标，可以选择项目中的两份 `.tex` 文件，通过 `https://3142.nl/latex-diff/` 生成 diff TeX，并在插件窗口里查看和复制结果。
+Chrome extension for generating `latexdiff` output from two `.tex` files in an Overleaf project.
 
-## 安装
+Open an Overleaf project, choose an old and a new TeX file, generate a diff through [3142.nl/latex-diff](https://3142.nl/latex-diff/), then copy the result or insert it back into the currently open Overleaf editor.
 
-1. 打开 Chrome 的 `chrome://extensions/`。
-2. 打开右上角「开发者模式」。
-3. 点击「加载已解压的扩展程序」。
-4. 选择本目录：`/Users/hsp/Documents/ChromeTexdiff`。
+## Features
 
-## 使用
+- Lists `.tex` files from the current Overleaf project.
+- Reads selected files through Overleaf's single-file download endpoint.
+- Generates `latexdiff` TeX using `https://3142.nl/latex-diff/`.
+- Displays the generated diff in the extension popup.
+- Copies the diff TeX to the clipboard.
+- Inserts the generated diff into the currently open Overleaf editor.
+- Optional cleanup to remove `\begin{displaymath}` and `\end{displaymath}` from the result.
+- Prevents using an existing `latexdiff` output file as an input file.
 
-1. 在 Chrome 中打开并登录 Overleaf 项目页面，例如 `https://www.overleaf.com/project/...`。
-2. 点击 Chrome 工具栏里的 `Overleaf LatexDiff`。
-3. 在「旧版本」和「新版本」下拉框里选择两份 `.tex` 文件。
-4. 点击「生成 diff」。
-5. 生成的 diff TeX 会显示在窗口中，可以点击「复制」。
+## Installation
 
-## 实现说明
+### From Source
 
-插件通过 Overleaf 当前标签页的登录态请求项目文件树：
+1. Clone or download this repository.
+2. Open Chrome and go to `chrome://extensions/`.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the repository folder that contains `manifest.json`.
 
-- 文件树：`/project/<projectId>/entities`
+### From ZIP
 
-读取文件内容时，插件会调用 Overleaf 的单文件下载接口读取所选 `.tex` 文件；不会调用 Download source，也不会下载项目 zip。
+1. Download a packaged release zip.
+2. Extract the zip.
+3. Open `chrome://extensions/`.
+4. Enable **Developer mode**.
+5. Click **Load unpacked** and select the extracted folder.
 
-生成 diff 时，插件会把用户选择的两份 TeX 内容作为 `old` 和 `new` 字段 POST 到 `https://3142.nl/latex-diff/`，并从返回页面的 Output 文本框中解析 diff TeX。
+## Usage
 
-如果 Overleaf 后续调整文件树接口，`content.js` 里的文件列表读取逻辑需要同步更新。
+1. Open an Overleaf project in Chrome.
+2. Click the **Overleaf LatexDiff** extension icon.
+3. Choose the old revision and new revision `.tex` files.
+4. Optionally enable **删除结果中的 displaymath 环境**.
+5. Click **生成 diff**.
+6. Copy the generated TeX or click **插入** to replace the currently open Overleaf editor content.
+
+## Privacy and Network Behavior
+
+This extension reads only the Overleaf project tab that you are currently using. It does not download the full project zip.
+
+To generate the diff, the selected old and new TeX file contents are sent to `https://3142.nl/latex-diff/` as form fields named `old` and `new`. Do not use this extension with confidential documents unless you are comfortable sending those selected files to that external service.
+
+## Implementation Notes
+
+- Manifest version: Chrome Extension Manifest V3.
+- Overleaf file list: `/project/<projectId>/entities`.
+- Overleaf file content: single-file download routes such as `/Project/<projectId>/doc/<docId>/download`.
+- Diff generation: background service worker posts to `https://3142.nl/latex-diff/` and the popup parses the returned Output textarea.
+
+The extension depends on Overleaf's current web routes and DOM structure. If Overleaf changes those internals, file listing, file reading, or editor insertion may need updates.
+
+## Development
+
+Validate the extension files:
+
+```sh
+node --check popup.js
+node --check content.js
+node --check background.js
+node -e "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')); console.log('manifest ok')"
+```
+
+Package the extension:
+
+```sh
+zip -r Overleaf-LatexDiff-0.1.0.zip manifest.json popup.html popup.css popup.js content.js background.js README.md
+```
+
+## Limitations
+
+- The extension does not run `latexdiff` locally.
+- The extension does not create a new Overleaf file automatically.
+- The **插入** action replaces the content of the currently open editor, so open the intended target file before using it.
+- Generated diff quality depends on the external `3142.nl/latex-diff/` service.
+
+## License
+
+Add a license before publishing if you want others to use, modify, or redistribute this project.
