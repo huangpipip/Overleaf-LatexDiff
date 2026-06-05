@@ -1,5 +1,7 @@
 # Overleaf LatexDiff
 
+[中文说明](README.zh-CN.md)
+
 Chrome extension for generating `latexdiff` output from two `.tex` files in an Overleaf project.
 
 Open an Overleaf project, choose an old and a new TeX file, generate a diff through [3142.nl/latex-diff](https://3142.nl/latex-diff/), then copy the result or insert it back into the currently open Overleaf editor.
@@ -71,7 +73,7 @@ node -e "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')); consol
 Package the extension:
 
 ```sh
-zip -r Overleaf-LatexDiff-0.1.0.zip manifest.json popup.html popup.css popup.js content.js background.js README.md
+zip -r Overleaf-LatexDiff-0.1.0.zip manifest.json popup.html popup.css popup.js content.js background.js README.md README.zh-CN.md
 ```
 
 ## Limitations
