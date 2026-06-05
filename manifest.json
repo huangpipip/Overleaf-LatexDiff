@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Overleaf LatexDiff",
+  "description": "Read a selected TeX source file from the currently open Overleaf project.",
+  "version": "0.1.0",
+  "action": {
+    "default_title": "Overleaf LatexDiff",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab", "tabs", "scripting"],
+  "host_permissions": [
+    "https://www.overleaf.com/*",
+    "https://*.overleaf.com/*",
+    "https://3142.nl/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.overleaf.com/project/*",
+        "https://*.overleaf.com/project/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

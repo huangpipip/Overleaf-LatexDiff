@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Overleaf LatexDiff</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>Overleaf LatexDiff</h1>
+          <p id="status">正在连接当前标签页...</p>
+        </div>
+        <button id="refresh" type="button" title="刷新文件列表">刷新</button>
+      </header>
+
+      <section class="controls diffControls">
+        <label for="oldFileSelect">旧版本</label>
+        <select id="oldFileSelect" disabled>
+          <option value="">等待读取项目...</option>
+        </select>
+        <label for="newFileSelect">新版本</label>
+        <select id="newFileSelect" disabled>
+          <option value="">等待读取项目...</option>
+        </select>
+        <span></span>
+        <label class="checkboxRow" for="removeDisplaymath">
+          <input id="removeDisplaymath" type="checkbox">
+          <span>删除结果中的 displaymath 环境</span>
+        </label>
+        <span></span>
+        <button id="generateDiff" type="button" disabled>生成 diff</button>
+      </section>
+
+      <section class="editor">
+        <div class="editorHeader">
+          <span id="fileName">未生成 diff</span>
+          <div class="editorActions">
+            <button id="insert" type="button" disabled title="插入到当前 Overleaf 编辑器">插入</button>
+            <button id="copy" type="button" disabled title="复制内容">复制</button>
+          </div>
+        </div>
+        <pre id="content" aria-live="polite"></pre>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
