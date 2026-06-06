@@ -42,9 +42,9 @@ Open an Overleaf project, choose an old and a new TeX file, generate a diff thro
 1. Open an Overleaf project in Chrome.
 2. Click the **Overleaf LatexDiff** extension icon.
 3. Choose the old revision and new revision `.tex` files.
-4. Optionally enable **删除结果中的 displaymath 环境**.
-5. Click **生成 diff**.
-6. Copy the generated TeX or click **插入** to replace the currently open Overleaf editor content.
+4. Optionally enable **Remove displaymath environment from result**.
+5. Click **Generate diff**.
+6. Copy the generated TeX or click **Insert** to replace the currently open Overleaf editor content.
 
 ## Privacy and Network Behavior
 
@@ -82,7 +82,7 @@ zip -r Overleaf-LatexDiff-0.1.0.zip manifest.json popup.html popup.css popup.js 
 
 - The extension does not run `latexdiff` locally.
 - The extension does not create a new Overleaf file automatically.
-- The **插入** action replaces the content of the currently open editor, so open the intended target file before using it.
+- The **Insert** action replaces the content of the currently open editor, so open the intended target file before using it.
 - Generated diff quality depends on the external `3142.nl/latex-diff/` service.
 
 ## License
