@@ -6,6 +6,8 @@ Chrome extension for generating `latexdiff` output from two `.tex` files in an O
 
 Open an Overleaf project, choose an old and a new TeX file, generate a diff through [3142.nl/latex-diff](https://3142.nl/latex-diff/), then copy the result or insert it back into the currently open Overleaf editor.
 
+<img width="1410" height="905" alt="Snipaste_2026-06-06_17-23-39" src="https://github.com/user-attachments/assets/5413ddea-d557-4fb5-a7b6-df556c69ace6" />
+
 ## Features
 
 - Lists `.tex` files from the current Overleaf project.
