@@ -87,4 +87,4 @@ zip -r Overleaf-LatexDiff-0.1.0.zip manifest.json popup.html popup.css popup.js 
 
 ## License
 
-Add a license before publishing if you want others to use, modify, or redistribute this project.
+This project is licensed under the [MIT License](LICENSE).
